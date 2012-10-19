@@ -18,7 +18,16 @@ class AccountController extends Zend_Controller_Action
      */
     public function successAction()
     {
-        // action body
+    	if($this->_request->isPost())
+    	{
+    		$email = $this->_request->getPost('email');
+    		$username = $this->_request->getPost('username');
+    		$password = $this->_request->getPost('password');
+    	}
+    	else
+    	{
+    		throw new Exception("only post data accepted!");
+    	}
     }
 
     /**
@@ -36,7 +45,8 @@ class AccountController extends Zend_Controller_Action
      */
     public function activateAction()
     {
-        // action body
+		$emailToActive = $this->_request->getQuery('email');
+		//check if the email exists
     }
 
 

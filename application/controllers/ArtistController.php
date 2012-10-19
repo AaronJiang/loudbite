@@ -1,16 +1,31 @@
 <?php
-/**
- * Artist Controller.
- */
+
 class ArtistController extends Zend_Controller_Action
 {
-	/**
-	 * List all the artists in the system.
-	 *
-	 */
-	public function listAllArtistsAction()
-	{
-		
-	}
+
+    public function init()
+    {
+        /* Initialize action controller here */
+    }
+
+    public function indexAction()
+    {
+        // action body
+    }
+
+    public function listAllArtistsAction()
+    {
+        // action body
+    }
+
+    public function affiliatecontentAction()
+    {
+        // action body
+    }
 
 }
+
+
+
+
+
