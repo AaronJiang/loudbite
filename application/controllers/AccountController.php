@@ -15,6 +15,7 @@ class AccountController extends Zend_Controller_Action
 
     /**
      * Process the account form
+     *
      */
     public function successAction()
     {
@@ -32,6 +33,7 @@ class AccountController extends Zend_Controller_Action
 
     /**
      * Display the form for signing up
+     *
      */
     public function newAction()
     {
@@ -42,6 +44,7 @@ class AccountController extends Zend_Controller_Action
      * Activate Account. Used once the user
      * receuves a welcome email and decides to authenticate
      * their account
+     *
      */
     public function activateAction()
     {
@@ -49,8 +52,25 @@ class AccountController extends Zend_Controller_Action
 		//check if the email exists
     }
 
+    public function updateAction()
+    {
+        //Check if the user is logged in
+
+        //Get the user's id
+
+        //Get the user's information
+
+        //Create the Zend_View object
+       // $view = new Zend_View();
+        //$view->setScriptPath("/var/zend/loudbite/application/view");
+       // $view->render("update.phtml");
+
+    }
+
 
 }
+
+
 
 
 
