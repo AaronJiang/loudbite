@@ -47,7 +47,13 @@ class ArtistController extends Zend_Controller_Action
         $genre = $this->_request->getPost('genre');
         $rating = $this->_request->getPost('rating');
         $isFav = $this->_request->getPost('isFav');
-        //Validate 
+
+        //Clean up inputs
+        $artistName = $this->view->escape($artistName); 
+        $genre = $this->view->escape($genre);
+        $rating = $this->view->escape($rating);
+        $isFav = $this->view->escape($isFav);
+        
         //Save the input into DB
     }
 
@@ -68,8 +74,27 @@ class ArtistController extends Zend_Controller_Action
         $this->view->setScriptPath("/var/zend/loudbite/");
         $this->render("news");
     }
+    
+    /**
+     * Remove favorite artist
+     */
+    public function removeAction()
+    {
+        //Check if the user is loggedin 
 
+        //Get the user's id
 
+       //Get the user's artist with rating.
+        $artists = array(
+                 array( "name" => "Thievery Corporation", "rating" => 5),
+                 array("name" => "The Eagles", "rating" => 5),
+                 array("name" => "Elton John", "rating" => 4)
+        );
+
+        //Set the view variables
+        $this->view->totalArtist = count($artists);
+        $this->view->artists = $artists;
+    }
 }
 
 

@@ -37,7 +37,36 @@ class AccountController extends Zend_Controller_Action
      */
     public function newAction()
     {
-        // action body
+        //create Form
+        $form = new Zend_Form();
+        $form->setAction('success');
+        $form->setMethod('post');
+        $form->setDescription('sign up form');
+        $form->setAttrib('sitename','loudbite');
+        
+        //Add elements
+        
+        //Create Username Field
+        $form->addElement('text','username');
+        $usernameElement = $form->getElement('username');
+        $usernameElement->setLabel('Username:');
+        
+        //Create Email Field
+        $form->addElement('text','email');
+        $emailElement = $form->getElement('email');
+        $emailElement->setLabel('Email:');
+        
+        //Create Password field
+        $form->addElement('password','password');
+        $passwordElement = $form->getElement('password');
+        $passwordElement->setLabel('Password:');
+        
+        $form->addElement('submit', 'submit');
+        $submitButton = $form->getElement('submit');
+        $submitButton->setLabel('Create My Account!');
+        
+        //add the form to the view
+        $this->view->form = $form;
     }
 
     /**
