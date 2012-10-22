@@ -19,11 +19,12 @@ class AccountController extends Zend_Controller_Action
      */
     public function successAction()
     {
-    	if($this->_request->isPost())
+        $form = $this->getSignupForm();
+    	if($form->isValid($_POST))
     	{
-    		$email = $this->_request->getPost('email');
-    		$username = $this->_request->getPost('username');
-    		$password = $this->_request->getPost('password');
+    		$email = $form->getValue('email');
+    		$username = $form->getValue('username');
+    		$password = $form->getValue('password');
     	}
     	else
     	{
@@ -37,36 +38,47 @@ class AccountController extends Zend_Controller_Action
      */
     public function newAction()
     {
-        //create Form
+        //Get the form
+        $form = $this->getSignupForm();
+        
+        //add the form to the view
+        $this->view->form = $form;
+    }
+
+    /**
+     * Create the sign up form
+     */
+    private function getSignupForm()
+    {
+        //Create Form
         $form = new Zend_Form();
         $form->setAction('success');
         $form->setMethod('post');
-        $form->setDescription('sign up form');
         $form->setAttrib('sitename','loudbite');
-        
-        //Add elements
-        
+
+        //Add Element
         //Create Username Field
         $form->addElement('text','username');
         $usernameElement = $form->getElement('username');
         $usernameElement->setLabel('Username:');
-        
+        $usernameElement->setOrder(1)->setRequired(true);
+
         //Create Email Field
         $form->addElement('text','email');
         $emailElement = $form->getElement('email');
         $emailElement->setLabel('Email:');
-        
-        //Create Password field
-        $form->addElement('password','password');
+        $emailElement->setOrder(3)->setRequired(true);
+
+        //Create Password Field.
+        $form->addElement('password', 'password');
         $passwordElement = $form->getElement('password');
         $passwordElement->setLabel('Password:');
-        
+        $passwordElement->setOrder(2)->setRequired(true);
         $form->addElement('submit', 'submit');
         $submitButton = $form->getElement('submit');
         $submitButton->setLabel('Create My Account!');
-        
-        //add the form to the view
-        $this->view->form = $form;
+        $submitButton->setOrder(4);
+        return $form;
     }
 
     /**
