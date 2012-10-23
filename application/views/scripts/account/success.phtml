@@ -1,6 +1,23 @@
+<?php echo $this->doctype('XHTML1_STRICT'); ?>
 <html>
- <head><title>LoudBite.com</title></head>
- <body>
-  Thank you! You're now part of the site.
- </body>
+<head>
+  <?php echo $this->headTitle('LoudBite.com – Account Sign up success'); ?>
+</head>
+<body>
+<?php echo $this->render("includes/header.phtml"); ?>
+<h3>Account Sign up</h3>
+
+<?php 
+if($this->errors)
+{
+    echo $this->form;
+}
+else
+{
+    echo "thank you, you are one step closer
+          to becomming a full member.";
+}
+?>
+
+</body>
 </html>

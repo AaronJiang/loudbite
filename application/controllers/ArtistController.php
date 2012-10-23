@@ -25,19 +25,9 @@ class ArtistController extends Zend_Controller_Action
 
     public function newAction()
     {
-        //Get all genres
-        $genres = array("Electronic",
-                "Country",
-                "Rock",
-                "R&B",
-                "Hip-Hop",
-                "Heavy-Metal",
-                "Alternative Rock",
-                "Christian",
-                "Jazz",
-                "Pop");
-        //Set the view variables
-        $this->view->genres=$genres;
+        //Check if the user is logged in
+        //Set the view varibales
+        $this->view->form = $this->getAddArtistForm();
     }
 
     public function saveArtistAction()
@@ -95,6 +85,82 @@ class ArtistController extends Zend_Controller_Action
         $this->view->totalArtist = count($artists);
         $this->view->artists = $artists;
     }
+    
+    /**
+     * Create Add Artist Form
+     * 
+     * @return Zend_From
+     */
+    private function getAddArtistForm()
+    {
+        $form = new Zend_Form();
+        $form->setAction("save-artist");
+        $form->setMethod("post");
+        $form->setName("addartist");
+        
+        //Create artist name text field
+        $artistNameElement = new Zend_Form_Element_Text('artistName');
+        $artistNameElement->setLabel("Artist Name:");
+        
+        //Create genres select menu
+        $genres = array("multiOptions" => array
+        (
+            "electronic"     => "Electronic",
+            "country"         => "Country",
+            "rock"           => "Rock",
+            "r_n_b"          => "R & B",
+            "hip_hop"        => "Hip-Hop",
+            "heavy_metal" => "Heavy-Metal",
+            "alternative_rock" => "Alternative Rock",
+            "christian"        => "Christian",
+            "jazz"            => "Jazz",
+            "pop"             => "Pop"
+          ));
+        
+        $genreElement = new Zend_Form_Element_Select('genre',$genres);
+        $genreElement->setLabel("Genres:")->setRequired(true);
+        
+        //Create favorite radio buttons.
+        $favoriteOptions = array("multiOptions" => array
+        (
+            "1" => "yes",
+            "0" => "no"
+        ));
+        
+        $isFavoriteListElement = new Zend_Form_Element_Radio('isFavorite',
+                                 $favoriteOptions);
+        $isFavoriteListElement->setLabel("Add to Favorite List:");
+        $isFavoriteListElement->setRequired(true);
+        
+        //Create Rating raio button
+        $ratingOptions = array("multiOptions" => array
+                (
+                        "1" => "1",
+                        "2" => "2",
+                        "3" => "3",
+                        "4" => "4",
+                        "5" => "5"
+                ));
+        
+        $ratingElement = new Zend_Form_Element_Radio('rating',$ratingOptions);
+        $ratingElement->setLabel("Rating:");
+        $ratingElement->setRequired(true)->addValidator(new Zend_Validate_Alnum(false));
+        
+        //Create submit button
+        $submitButton = new Zend_Form_Element_Submit("submit");
+        $submitButton->setLabel("Add Artist");
+        
+        //Add Element to form
+        $form->addElement($artistNameElement);
+        $form->addElement($genreElement);
+        $form->addElement($isFavoriteListElement);
+        $form->addElement($ratingElement);
+        $form->addElement($submitButton);
+        
+        return $form;
+        
+    }
+    
 }
 
 

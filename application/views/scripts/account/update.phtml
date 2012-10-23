@@ -7,30 +7,9 @@
 
 <body>
 <?php echo $this->render('includes/header.phtml') ?>
-<h3>Update My Profile</h3>
-<form action="saveprofile" method="POST">
-	<table width="500" border="0">
-		<tr>
-			<td>Username: </td>
-			<td><input type="text" name="username"
-			value="<?php echo $this->username?>" /></td>
-		</tr>
-		<tr>
-			<td>Email: </td>
-			<td><input type="text" name="email"
-			value="<?php echo $this->email?>" /></td>
-		</tr>
-		<tr>
-			<td>Password: </td>
-			<td><input type="password" name="password"
-			value="<?php echo $this->password?>" /></td>
-		</tr>
-		<tr>
-			<td colspan="2">
-			<input type="submit" value=" Update my account! " />
-			</td>
-		</tr>
-	</table>
-</form>
+
+    <h3>Update My Profile</h3>
+    <?php echo $this->form; ?>
+
 </body>
 </html>
