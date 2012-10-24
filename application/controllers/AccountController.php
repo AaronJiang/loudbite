@@ -58,46 +58,34 @@ class AccountController extends Zend_Controller_Action
         $form->setAttrib('sitename','loudbite');
 
         //Add Element
-        //Create Username Field
-        $form->addElement('text','username');
-        $usernameElement = $form->getElement('username');
-        $usernameElement->setLabel('Username:');
-        $usernameElement->setOrder(1)->setRequired(true);
+        require "../application/models/Form/Elements.php";
+        $LoudbiteElements = new Elements();
 
-        //Add validator
-        $usernameElement->addValidator(
-                        new Zend_Validate_StringLength(6,20)
-                        );
-        //Add Filter
-        $usernameElement->addFilter(new Zend_Filter_StringToLower());
-        $usernameElement->addFilter(new Zend_Filter_StripTags());
-        
+        //Create Username Field
+        $form->addElement($LoudbiteElements->getUsernameTextField());
+
         //Create Email Field
-        $form->addElement('text','email');
-        $emailElement = $form->getElement('email');
-        $emailElement->setLabel('Email:');
-        $emailElement->setOrder(3)->setRequired(true);
-        
-        //Add Validator
-        $emailElement->addValidator(new Zend_Validate_EmailAddress());
-        //Add Filter
-        $emailElement->addFilter(new Zend_Filter_StripTags());
-        
-        //Create Password Field.
-        $form->addElement('password', 'password');
-        $passwordElement = $form->getElement('password');
-        $passwordElement->setLabel('Password:');
-        $passwordElement->setOrder(2)->setRequired(true);
-        
-        //Add Validator
-        $passwordElement->addValidator(new Zend_Validate_StringLength(6,20));
-        //Add Filter
-        $passwordElement->addFilter(new Zend_Filter_StripTags());
-        
-        $form->addElement('submit', 'submit');
+        $form->addElement($LoudbiteElements->getEmailTextField());
+
+        //Create Password Field
+        $form->addElement($LoudbiteElements->getPasswordTextField());
+
+        //Add Captcha
+        $captchaElement = new Zend_Form_Element_Captcha(
+                'signup',
+                array('captcha'=>array(
+                    'captcha'=>'Figlet',
+                    'wordLen'=>6,
+                    'timeout'=>600 ) ) 
+                )
+        $captchaElement->setLabel('Please type in the words 
+            below to continue');
+
+        $form->addElement($captchaElement);
+        $form->addElement('submit','submit');
         $submitButton = $form->getElement('submit');
         $submitButton->setLabel('Create My Account!');
-        $submitButton->setOrder(4);
+
         return $form;
     }
 

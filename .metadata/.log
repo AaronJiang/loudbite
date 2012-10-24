@@ -1,0 +1,72 @@
+!SESSION 2012-10-23 16:18:17.872 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -showlocation
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -showlocation
+
+!ENTRY org.eclipse.ui.workbench 2 0 2012-10-23 16:19:09.858
+!MESSAGE A handler conflict occurred.  This may disable some commands.
+!SUBENTRY 1 org.eclipse.ui.workbench 2 0 2012-10-23 16:19:09.858
+!MESSAGE Conflict for 'org.eclipse.dltk.ui.edit.text.script.refactor.quickMenu':
+HandlerActivation(commandId=org.eclipse.dltk.ui.edit.text.script.refactor.quickMenu,
+	handler=org.eclipse.dltk.internal.ui.actions.refactoring.RefactorActionGroup$3@775c024c,
+	expression=AndExpression(ActivePartExpression(org.eclipse.php.internal.ui.explorer.PHPExplorerPart@2b54ae5a),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@5ab05fcb)),sourcePriority=1064960)
+HandlerActivation(commandId=org.eclipse.dltk.ui.edit.text.script.refactor.quickMenu,
+	handler=org.eclipse.dltk.internal.ui.actions.refactoring.RefactorActionGroup$3@399b08cc,
+	expression=AndExpression(ActivePartExpression(org.eclipse.php.internal.ui.explorer.PHPExplorerPart@2b54ae5a),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@5ab05fcb)),sourcePriority=1064960)
+
+!ENTRY org.eclipse.php.debug.core 4 4 2012-10-23 16:19:15.603
+!MESSAGE The debug port 9000 is in use. Please select a different port for the debugger.
+
+!ENTRY org.eclipse.php.debug.core 4 4 2012-10-23 16:19:16.030
+!MESSAGE Could not open a broadcast port on 20080 (port might be in use). Select a different port number
+
+!ENTRY org.zend.php.zendserver.deployment.ui 4 0 2012-10-23 16:19:26.416
+!MESSAGE Address already in use
+!STACK 0
+java.net.BindException: Address already in use
+	at java.net.PlainSocketImpl.socketBind(Native Method)
+	at java.net.AbstractPlainSocketImpl.bind(AbstractPlainSocketImpl.java:353)
+	at java.net.ServerSocket.bind(ServerSocket.java:336)
+	at java.net.ServerSocket.<init>(ServerSocket.java:202)
+	at java.net.ServerSocket.<init>(ServerSocket.java:114)
+	at org.zend.php.zendserver.deployment.ui.chrome.SocketCommandListener.openServerSocket(SocketCommandListener.java:69)
+	at org.zend.php.zendserver.deployment.ui.chrome.SocketCommandListener$1.run(SocketCommandListener.java:39)
+	at java.lang.Thread.run(Thread.java:679)
+
+!ENTRY org.eclipse.core.resources 4 77 2012-10-23 16:19:58.793
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2012-10-23 16:19:58.793
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2012-10-23 16:19:58.793
+!MESSAGE /var/zend/demo overlaps the workspace location: /var/zend/demo
+
+!ENTRY org.eclipse.core.resources 4 77 2012-10-23 16:20:23.091
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2012-10-23 16:20:23.091
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2012-10-23 16:20:23.091
+!MESSAGE /var/zend/demo overlaps the workspace location: /var/zend/demo
+!SESSION 2012-10-24 08:34:07.449 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -showlocation
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -showlocation
+
+!ENTRY org.eclipse.php.debug.core 4 4 2012-10-24 08:34:40.731
+!MESSAGE The debug port 9000 is in use. Please select a different port for the debugger.
+
+!ENTRY org.eclipse.ui.workbench 2 0 2012-10-24 08:36:29.957
+!MESSAGE A handler conflict occurred.  This may disable some commands.
+!SUBENTRY 1 org.eclipse.ui.workbench 2 0 2012-10-24 08:36:29.957
+!MESSAGE Conflict for 'org.eclipse.dltk.ui.edit.text.script.refactor.quickMenu':
+HandlerActivation(commandId=org.eclipse.dltk.ui.edit.text.script.refactor.quickMenu,
+	handler=org.eclipse.dltk.internal.ui.actions.refactoring.RefactorActionGroup$3@76938855,
+	expression=AndExpression(ActivePartExpression(org.eclipse.php.internal.ui.explorer.PHPExplorerPart@7a79ae56),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@5fb9f88b)),sourcePriority=1064960)
+HandlerActivation(commandId=org.eclipse.dltk.ui.edit.text.script.refactor.quickMenu,
+	handler=org.eclipse.dltk.internal.ui.actions.refactoring.RefactorActionGroup$3@4fdbc144,
+	expression=AndExpression(ActivePartExpression(org.eclipse.php.internal.ui.explorer.PHPExplorerPart@7a79ae56),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@5fb9f88b)),sourcePriority=1064960)

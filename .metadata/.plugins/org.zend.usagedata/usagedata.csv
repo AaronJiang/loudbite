@@ -1,0 +1,8 @@
+monitorId,attribute1,attribute2,attribute3,attribute4,time
+org.zend.wizardUsageMonitor,13,New PHP Project,,"bs=false;bt=&Finish;bt1=8;ce=true;ct=__invalid__;we=13;ws=587202568;wst=New PHP Project;wt=button;",1350980398673
+org.zend.wizardUsageMonitor,16,New PHP Project,,"ce=false;ct=__invalid__;tc=true;te=true;tl=Project Name:;tt=NOT_EMPTY;we=16;ws=570443780;wst=New PHP Project;wt=text;",1350980398697
+org.zend.wizardUsageMonitor,16,New PHP Project,,"ce=false;ct=__invalid__;tc=true;te=true;tl=Location:;tt=NOT_EMPTY;we=16;ws=570443780;wst=New PHP Project;wt=text;",1350980398698
+org.zend.wizardUsageMonitor,13,New PHP Project,,"bs=false;bt=&Finish;bt1=8;ce=true;ct=__invalid__;we=13;ws=587202568;wst=New PHP Project;wt=button;",1350980423027
+org.zend.wizardUsageMonitor,16,New PHP Project,,"ce=false;ct=__invalid__;tc=true;te=true;tl=Project Name:;tt=NOT_EMPTY;we=16;ws=570443780;wst=New PHP Project;wt=text;",1350980423036
+org.zend.wizardUsageMonitor,16,New PHP Project,,"ce=false;ct=__invalid__;tc=true;te=true;tl=Location:;tt=NOT_EMPTY;we=16;ws=570443780;wst=New PHP Project;wt=text;",1350980423049
+org.zend.viewsUsageMonitor,activated,org.eclipse.dltk.ui.TypeHierarchy,org.eclipse.php.perspective,"view",1351038990558
