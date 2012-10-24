@@ -25,6 +25,32 @@ class AccountController extends Zend_Controller_Action
     		$email = $form->getValue('email');
     		$username = $form->getValue('username');
     		$password = $form->getValue('password');
+    		
+    		//Create Db Object
+    		require "../application/models/Db/Db_Db.php";
+    		$db = Db_Db::conn();
+    		
+    		//Create the record to save into the Db
+    		$userData = array("username" => $username,
+    		        "email" => $email,
+    		        "password" => $password,
+    		        "status" => "pending",
+    		        "created_date" => new Zend_Db_Expr("NOW()")
+    		        );
+    		try
+    		{
+    	        //Insert into the account
+    	        $db->insert('accounts',$userData);
+
+    	        //Get the Id of he user
+    	        $userId = $db->lastInsertId();
+    	        
+    	        //Send out thankyou email
+    		}
+    		catch(Zend_Db_Exception $e)
+    		{
+    		    $this->view->form = $form;
+    		}
     	}
     	else
     	{
@@ -77,7 +103,7 @@ class AccountController extends Zend_Controller_Action
                     'captcha'=>'Figlet',
                     'wordLen'=>6,
                     'timeout'=>600 ) ) 
-                )
+                );
         $captchaElement->setLabel('Please type in the words 
             below to continue');
 
@@ -181,9 +207,6 @@ class AccountController extends Zend_Controller_Action
         $submitElement->setLabel('Update My Account');
         return $form;
     }
-    
-    
-
 
 }
 

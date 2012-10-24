@@ -29,22 +29,68 @@ class ArtistController extends Zend_Controller_Action
         //Set the view varibales
         $this->view->form = $this->getAddArtistForm();
     }
-
+    
+    /**
+     * Save Artist to Db
+     */
     public function saveArtistAction()
     {
-        //Initialize variables
-        $artistName = $this->_request->getPost('artistName');
-        $genre = $this->_request->getPost('genre');
-        $rating = $this->_request->getPost('rating');
-        $isFav = $this->_request->getPost('isFav');
-
-        //Clean up inputs
-        $artistName = $this->view->escape($artistName); 
-        $genre = $this->view->escape($genre);
-        $rating = $this->view->escape($rating);
-        $isFav = $this->view->escape($isFav);
         
-        //Save the input into DB
+        //Create instance of artist form
+        $form = $this->getAddArtistForm();
+        
+        //Check if there were no errors
+        if($form->isValid($_POST))
+        {
+            //Initialize the variables
+            $artistName = $form->getValue('artistName');
+            $genre = $form->getValue('genre');
+            $rating = $form->getValue('rating');
+            $isFav = $form->getValue('isFavorite');
+            
+            //Set the temporary account id to use.
+            $userId = 10;
+    
+            try
+            {
+                //Create a db object
+                require_once "../application/models/Db/Db_Db.php";
+                $db = Db_Db::conn();
+                   
+                //Initialize data to save into DB
+                $artistData = array("artist_name" => $artistName,
+                            "genre" => $genre,
+                            "created_date" => new Zend_Db_Expr("NOW()")
+                        );
+                
+                //Insert the artist into the Db
+                $db->insert('artists',$artistData);
+                
+                //Fetch the artist id
+                $artistId = $db->lastInsertId();
+                
+                //Initialize data for the account artists table
+                $accountArtistData = array("account_id" => $userId,
+                            "artist_id" => $artistId,
+                            "rating"    => $rating,
+                            "is_fav"    => $isFav,
+                            "created_date" =>
+                            new Zend_Db_Expr("NOW()")
+                        );
+                //Insert the data.
+                $db->insert('accounts_artists', $accountArtistData);
+                
+            }
+            catch(Zend_Db_Exception $e)
+            {
+                echo $e->getMessage();
+            }
+        }
+        else
+        {
+          $this->view->errors = $form->getMessages();
+          $this->view->form = $form;
+        }
     }
 
     /**
