@@ -12,7 +12,94 @@ class AccountController extends Zend_Controller_Action
     {
         // action body
     }
+    
+    /**
+     * Display the form for signing up
+     *
+     */
+    public function newAction()
+    {
+        //Get the form
+        $form = $this->getSignupForm();
+    
+        //add the form to the view
+        $this->view->form = $form;
+    }
 
+    /**
+     * Load the Login Form
+     */
+    public function loginAction()
+    {
+        //Initialize the form for the view
+        $this->view->form = $this->getLoginForm();
+    }
+    
+    /**
+     * Authenticate login information
+     */
+    public function authenticateAction()
+    {
+        $form = $this->getLoginForm();
+        
+        if($form->isValid($_POST))
+        {
+            //Initialize the variables
+            $email = $form->getValue("email");
+            $password = $form->getValue("password");
+            
+            //Create a db object
+            require "../application/models/Db/Db_Db.php";
+            $db = Db_Db::conn();
+            
+           //Quote values
+           $email = $db->quote($email);
+           $password = $db->quote($password);
+           
+           //Check if the user is valid
+           $statement = "SELECT count(id) AS total FROM accounts
+                   WHERE email=".$email." AND password=".$password
+                   ." AND status='active'";
+           $result = $db->fetchOne($statement);
+           
+           //If we have at least one row then the users
+           //email and password is valid
+           if($result==1)
+           {
+               //Fetch the user's data
+                $statement = "SELECT id, username, created_date FROM accounts
+                     WHERE email = ".$email."
+                     AND password = ".$password;
+                $results = $db->fetchRow($statement);
+                
+                //Set the user's session
+                $_SESSION['id'] = $results['id'];
+                $_SESSION['username'] = $results['username'];
+                $_SESSION['dateJoined'] = $results['created_date'];
+                
+                //Forward the user to the profile page
+                $this->_forward("accountmanager");
+               
+           }else{
+               //Set the error message the re-display the login page
+               $this->view->message = "Username or password incorrect.";
+               $this->view->form = $form;
+               $this->render("login");
+           }
+        
+        }else{
+            $this->view->form = $form;
+            $this->render("login");
+        }    
+    }
+    
+    /**
+     * Account Manager
+     */
+    public function accountmanagerAction()
+    {
+    
+    }
     /**
      * Process the account form
      *
@@ -58,20 +145,90 @@ class AccountController extends Zend_Controller_Action
     	    $this->view->form = $form;
     	}
     }
-
+    
     /**
-     * Display the form for signing up
+     * Activate Account. Used once the user
+     * receuves a welcome email and decides to authenticate
+     * their account
      *
      */
-    public function newAction()
+    public function activateAction()
     {
-        //Get the form
-        $form = $this->getSignupForm();
-        
-        //add the form to the view
-        $this->view->form = $form;
+        $emailToActive = $this->_request->getQuery('email');
+        //check if the email exists
     }
+    
+    public function updateAction()
+    {
+        //Check if the user is logged in
+    
+        //Get the user's id
+    
+        //Get the user's information
+    
+        //Create the form
+        $form = $this->getUpdateForm();
+    
+        //Check if the form has been submitted
+        //if so validate and process
+        if($_POST)
+        {
+            if($form->isValid($_POST))
+            {
+                //Get the values
+                $username = $form->getValue('username');
+                $password = $form->getValue('password');
+                $email = $form->getValue('email');
+                $aboutMe = $form->getValue('aboutme');
+    
+                //Save the file
+                $form->getElement('avatar')->receive();
+                echo 'update success';
+            }
+            else {
+                $this->view->form = $form;
+            }
+        }
+        else
+        {
+            $this->view->form = $form;
+        }
+    }
+    
+    /**
+     * View All Accounts
+     */
+    public function viewAllAction()
+    {
+        //Create Db Object
+        require "../application/models/Db/Db_Db.php";
+        $db = Db_Db::conn();
 
+        try 
+        {
+            //Create SQL statement to select data
+            $statement = "SELECT id, username, created_date
+                    From accounts WHERE status = 'active'";
+            //Fetch the data
+            $result = $db->fetchAll($statement);
+
+            //Create the SQL statement to 
+            //fetch the count of all active members
+            $statement = "SELECT COUNT(id) as total_members
+                    FROM accounts WHERE status='active'";
+            //Fetch ONLY the count of active members
+            $count = $db->fetchOne($statement);
+            
+            //Set the view variable
+            $this->view->members = $result;
+            $this->view->totalMembers = $count;
+        }
+        catch(Zend_Db_Exception $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    
     /**
      * Create the sign up form
      */
@@ -114,54 +271,38 @@ class AccountController extends Zend_Controller_Action
 
         return $form;
     }
-
+    
     /**
-     * Activate Account. Used once the user
-     * receuves a welcome email and decides to authenticate
-     * their account
-     *
+     * Get Login Form
      */
-    public function activateAction()
+    private function getLoginForm()
     {
-		$emailToActive = $this->_request->getQuery('email');
-		//check if the email exists
-    }
-
-    public function updateAction()
-    {
-        //Check if the user is logged in
-
-        //Get the user's id
-
-        //Get the user's information
-
         //Create the form
-        $form = $this->getUpdateForm();
+        $form = new Zend_Form();
+        $form->setAction("authenticate");
+        $form->setMethod("post");
+        $form->setName("loginform");
+
+        //Create text elements
+        $emailElement = new Zend_Form_Element_Text("email");
+        $emailElement->setLabel("Email:");
+        $emailElement->setRequired(true);
         
-        //Check if the form has been submitted
-        //if so validate and process
-        if($_POST)
-        {
-            if($form->isValid($_POST))
-            {
-                //Get the values
-                $username = $form->getValue('username');
-                $password = $form->getValue('password');
-                $email = $form->getValue('email');
-                $aboutMe = $form->getValue('aboutme');
-                
-                //Save the file
-                $form->getElement('avatar')->receive();
-                echo 'update success';
-            }
-            else {
-                $this->view->form = $form;
-            }
-        }
-        else
-        {
-            $this->view->form = $form;
-        }
+        //Create Password element
+        $passwordElement = new Zend_Form_Element_Password("password");
+        $passwordElement->setLabel("Password:");
+        $passwordElement->setRequired(true);
+        
+        //Create the submit button
+        $submitButtonElement = new Zend_Form_Element_Submit("submit");
+        $submitButtonElement->setLabel("Log in");
+           
+        //Add Elements to form
+        $form->addElement($emailElement);
+        $form->addElement($passwordElement);
+        $form->addElement($submitButtonElement);
+        
+        return $form;
     }
     
     private function getUpdateForm()
