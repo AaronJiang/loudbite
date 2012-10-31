@@ -97,7 +97,7 @@ class AccountController extends Zend_Controller_Action
      */
     public function accountmanagerAction()
     {
-        //Check if the user is logged in
+        //Check if the user has logged in
         if(!isset($_SESSION['id']))
         {
             $this->_forward("login");
