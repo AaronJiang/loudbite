@@ -49,7 +49,7 @@ class ArtistController extends Zend_Controller_Action
             $isFav = $form->getValue('isFavorite');
             
             //Set the temporary account id to use.
-            $userId = 10;
+            $userId = 1;
     
             try
             {
