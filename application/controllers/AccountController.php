@@ -49,7 +49,7 @@ class AccountController extends Zend_Controller_Action
             $password = $form->getValue("password");
             
             //Create a db object
-            require "../application/models/Db/Db_Db.php";
+            require_once "../application/models/Db/Db_Db.php";
             $db = Db_Db::conn();
             
            //Quote values
@@ -98,7 +98,42 @@ class AccountController extends Zend_Controller_Action
      */
     public function accountmanagerAction()
     {
-    
+        //Check if the user is logged in
+        if(!isset($_SESSION['id']))
+        {
+            $this->_forward("login");
+        }
+
+        try
+        {
+            //Create a db object
+            require_once "../application/models/Db/Db_Db.php";
+            $db = Db_Db::conn();
+            //Initialize data.
+            $userId = $_SESSION['id'];
+            $userName = $_SESSION['username'];
+            $dateJoined = $_SESSION['dateJoined'];
+
+            //Fetch all the users favorite artists.
+            $statement = "SELECT b.artist_name, b.id,
+                    aa.created_date as date_became_fan
+                    FROM artists AS b
+                    INNER JOIN accounts_artists aa ON aa.artist_id = b.id
+                    WHERE aa.account_id = ?
+                    AND aa.is_fav = 1";
+
+            $favArtists = $db->fetchAll($statement, $userId);
+
+            //Set the view variables
+            $this->view->artists = $favArtists;
+            $this->view->username = $userName;
+            $this->view->dateJoined = $dateJoined;
+        }
+        catch(Zend_Db_Exception $e)
+        {
+            echo $e->getMessage();
+        }
+
     }
     /**
      * Process the account form
@@ -114,7 +149,7 @@ class AccountController extends Zend_Controller_Action
     		$password = $form->getValue('password');
     		
     		//Create Db Object
-    		require "../application/models/Db/Db_Db.php";
+    		require_once "../application/models/Db/Db_Db.php";
     		$db = Db_Db::conn();
     		
     		//Create the record to save into the Db
@@ -201,7 +236,7 @@ class AccountController extends Zend_Controller_Action
     public function viewAllAction()
     {
         //Create Db Object
-        require "../application/models/Db/Db_Db.php";
+        require_once "../application/models/Db/Db_Db.php";
         $db = Db_Db::conn();
 
         try 
@@ -241,7 +276,7 @@ class AccountController extends Zend_Controller_Action
         $form->setAttrib('sitename','loudbite');
 
         //Add Element
-        require "../application/models/Form/Elements.php";
+        require_once "../application/models/Form/Elements.php";
         $LoudbiteElements = new Elements();
 
         //Create Username Field
@@ -315,7 +350,7 @@ class AccountController extends Zend_Controller_Action
         $form->setAttrib('enctype', 'multipart/form-data');
         
         //Load elemet class
-        require "../application/models/Form/Elements.php";
+        require_once "../application/models/Form/Elements.php";
         $LoudbiteElements = new Elements();
         
         //Create Username Field
