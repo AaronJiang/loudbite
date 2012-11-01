@@ -382,7 +382,44 @@ class AccountController extends Zend_Controller_Action
         $submitElement->setLabel('Update My Account');
         return $form;
     }
-
+    
+    /**
+     * Test-Object Oriented Select Statement
+     */
+    public function testoostatementAction()
+    {
+        //Create DB object 
+        require_once "../application/models/Db/Db_Db.php";
+        $db = Db_Db::conn();
+        
+        //Create the statement
+        //SELECT `a`.`id`, `a`.`artist_name` AS `name`, `a`.`genre`
+        //FROM `artists` AS `a` WHERE (artist_name='Groove Armada')
+        $select = new Zend_Db_Select($db);
+        
+        
+        //Determine which columns to retrieve.
+        //Determine which table to retrieve data from.
+        $columns = array("id" => 'id',
+                   "name" => 'artist_name',
+                   "genre" => 'genre');
+        
+        $tableInfo = array("a"=>"artists");
+        
+        $statement = $select->from($tableInfo,$columns)
+                    ->where("artist_name=?","aaron")
+                    ->where("genre=?","electronic");
+        
+        //Query the Database
+        $results = $db->query($statement);
+        $rows = $results->fetchAll();
+        
+        //Compare statement
+        echo $statement->__toString();
+        
+        //Supress the view
+        $this->_helper->viewRenderer->setNoRender();
+    }
 }
 
 
