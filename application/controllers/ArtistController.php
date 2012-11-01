@@ -39,6 +39,12 @@ class ArtistController extends Zend_Controller_Action
         //Create instance of artist form
         $form = $this->getAddArtistForm();
         
+        //Check for logged in status
+        if(!isset($_SESSION['id']))
+        {
+            $this->_forward("login","account");
+        }
+        
         //Check if there were no errors
         if($form->isValid($_POST))
         {
@@ -47,16 +53,17 @@ class ArtistController extends Zend_Controller_Action
             $genre = $form->getValue('genre');
             $rating = $form->getValue('rating');
             $isFav = $form->getValue('isFavorite');
-            
-            //Set the temporary account id to use.
-            $userId = 1;
+
+            $userId = $_SESSION['id'];
     
+            //Create a db object
+            require_once "../application/models/Db/Db_Db.php";
+            $db = Db_Db::conn();
+            
+            $db->beginTransaction();
+            
             try
             {
-                //Create a db object
-                require_once "../application/models/Db/Db_Db.php";
-                $db = Db_Db::conn();
-                   
                 //Initialize data to save into DB
                 $artistData = array("artist_name" => $artistName,
                             "genre" => $genre,
@@ -79,10 +86,13 @@ class ArtistController extends Zend_Controller_Action
                         );
                 //Insert the data.
                 $db->insert('accounts_artists', $accountArtistData);
+                $db->commit();
                 
             }
             catch(Zend_Db_Exception $e)
             {
+                //If there were errors roll everything back
+                $db->rollBack();
                 echo $e->getMessage();
             }
         }
