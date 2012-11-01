@@ -408,8 +408,10 @@ class AccountController extends Zend_Controller_Action
         
         $statement = $select->from($tableInfo,$columns)
                     ->where("artist_name=?","aaron")
-                    ->where("genre=?","electronic");
+                    ->where("genre=?","electronic")
+                    ->orWhere('genre=?','house');
         
+
         //Query the Database
         $results = $db->query($statement);
         $rows = $results->fetchAll();
@@ -418,6 +420,48 @@ class AccountController extends Zend_Controller_Action
         echo $statement->__toString();
         
         //Supress the view
+        $this->_helper->viewRenderer->setNoRender();
+    }
+
+    /**
+     * Test - Get All Fans
+     */ 
+    public function testoofansAction()
+    {
+        //Create DB object 
+        require_once "../application/models/Db/Db_Db.php";
+        $db = Db_Db::conn();
+
+        //Create the statement
+        //SELECT `a`.`id` AS `artist id`, `a`.`artist_name` AS `name`,
+        //`a`.`genre`,aa`.`account_id` AS `user_id`,
+        //`aa`.`created_date` AS `date_became_fan`
+        //FROM `artists` AS `a`
+        //INNER JOIN `accounts_artists` AS `aa` ON aa.artist_id = a.id
+        $select = new Zend_Db_Select($db);
+
+        //Determine which columns to retrieve.
+        //Determine which table to retrieve data from.
+        $columns = array("artist_id" => "a.id",
+                    "name" => "a.artist_name",
+                    "genre" => "a.genre");
+
+        $tableInfo = array("a" => "artists");
+
+        $statement = $select->from($tableInfo,$columns)
+                    ->join(array("aa"=>"accounts_artists"),
+                        "aa.artist_id=a.id",
+                        array("user_id" => 'aa.account_id',
+                            "date_became_fan" =>
+                            'aa.created_date'));    
+
+        $results = $db->query($statement);
+        $rows = $results->fetchAll();
+
+        //Compare Statement
+        echo $statement->__toString();
+        
+        //Supress the View
         $this->_helper->viewRenderer->setNoRender();
     }
 }
