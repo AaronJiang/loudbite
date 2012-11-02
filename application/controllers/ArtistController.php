@@ -143,6 +143,45 @@ class ArtistController extends Zend_Controller_Action
     }
     
     /**
+     * Display all the artists in the system
+     */
+    public function listAction()
+    {
+    	$currentPage = 1;
+    	//Check if the user is not on page 1
+    	$i = $this->_request->getQuery('i');
+    	if(!empty($i))
+    	{
+    		$currentPage = $this->_request->getQuery('i');
+    	}
+    	
+    	//Create a db object
+    	require_once "../application/models/Db/Db_Db.php";
+    	$db = Db_Db::conn();
+    	
+    	//Create a Zend_db_select object
+    	$sql = new Zend_Db_Select($db);
+    	
+    	//Define the columns to retrieve as well as table.
+    	$columns = array("id","artist_name");
+    	$table = array("artists");
+    	
+    	//SELECT `artists`.`id`, `artists`.`artist_name` FROM `artists`
+		$statement = $sql->from($table, $columns);
+    	
+     	//Initialize the Zend_Paginator
+     	$paginator = Zend_Paginator::factory($statement);
+    	
+     	//Set the properties for the pagination
+     	$paginator->setItemCountPerPage(4);
+     	$paginator->setPageRange(3);
+     	$paginator->setCurrentPageNumber($currentPage);
+    	
+     	$this->view->paginator = $paginator;
+    	
+    }
+    
+    /**
      * Create Add Artist Form
      * 
      * @return Zend_From

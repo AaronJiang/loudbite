@@ -453,7 +453,9 @@ class AccountController extends Zend_Controller_Action
                         "aa.artist_id=a.id",
                         array("user_id" => 'aa.account_id',
                             "date_became_fan" =>
-                            'aa.created_date'));    
+                            'aa.created_date'))
+                    ->order("date_became_fan DESC")    
+                    ->limit(4);
 
         $results = $db->query($statement);
         $rows = $results->fetchAll();
