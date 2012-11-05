@@ -24,7 +24,7 @@ class EmailController extends Zend_Controller_Action
 	 */
     public function smtpSendMailAction()
     {
-    	//Create SMTP connection Object
+    	//Create using SMTP connection Object
     	$configInfo = array('auth' => 'login',
     				'ssl' => 'ssl',
     				'username' => 'aaron.jijesoft@gmail.com',
