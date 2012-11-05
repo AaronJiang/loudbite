@@ -166,11 +166,31 @@ class AccountController extends Zend_Controller_Action
     	        //Get the Id of he user
     	        $userId = $db->lastInsertId();
     	        
-    	        //Send out thankyou email
+    	        //Send out welcome email
+                $config = array('auth' => 'login','ssl' => 'ssl',
+                        'username' => 'aaron.jijesoft@gmail.com',
+                        'password' => 'jijesoft',
+                        'port' => '465');
+                $transport = new Zend_Mail_Transport_Smtp(
+                        'smtp.gmail.com', 
+                        $config);
+
+                $MailObj = new Zend_Mail();
+                $emailMessage = "Welcome to Loudbite.com";
+                $fromEmail = "welcomeparty@loudbite.com";
+                $fromFullName = "Loudbite.com";
+                $to = $email;
+                $subject = "Welcome to Loudbite.com";
+
+                $MailObj->setBodyText($emailMessage);
+                $MailObj->setFrom($fromEmail,$fromFullName);
+                $MailObj->addTo($to);
+                $MailObj->setSubject($subject);
+                $MailObj->send($transport);
     		}
     		catch(Zend_Db_Exception $e)
     		{
-    		    $this->view->form = $form;
+    		    echo $e->getMessage();
     		}
     	}
     	else
