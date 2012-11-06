@@ -1,4 +1,21 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Account</b> and script/action name <b>activate</b></p>
-</div>
+<?php echo $this->doctype('XHTML1_STRICT'); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <?php echo $this->headTitle('LoudBite.com – Account Activation'); ?>
+</head>
+<body>
+
+<?php echo $this->render("includes/header.phtml"); ?>
+<h3>Account Activation</h3>
+<?php
+if($this->activated){
+  echo "Thank you. Your account has now been activated.";
+}else{
+  echo "We’re sorry, please sign up for an account.
+      <a href='/account/new'>Click here to sign up</a>";
+  }
+?>
+  
+</body>
+</html>
+    
