@@ -28,6 +28,12 @@
         <controllerFile controllerName="Email">
           <actionMethod actionName="index"/>
         </controllerFile>
+        <controllerFile controllerName="Services">
+          <actionMethod actionName="index"/>
+        </controllerFile>
+        <controllerFile controllerName="TestWS">
+          <actionMethod actionName="index"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
       <layoutsDirectory enabled="false"/>
@@ -73,6 +79,12 @@
             <viewScriptFile forActionName="update"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Email">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Services">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="TestWS">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
