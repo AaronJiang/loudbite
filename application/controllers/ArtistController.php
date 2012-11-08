@@ -182,6 +182,71 @@ class ArtistController extends Zend_Controller_Action
     }
     
     /**
+     * List photos for a specifi artist
+     * 
+     */
+    public function listPhotosAction()
+    {
+    	//check if the artist is present
+    	$artist = $this->_request->getParam('artist');
+    	
+    	if(empty($artist))
+    	{
+    		throw new Exception('Whoops you did not supply an artist');
+    	}
+    	
+    	try 
+    	{
+    		$flickr = new Zend_Service_Flickr('01a20f07abe1967002c3ec4967c46034');
+
+    		//get the photos
+    		$options = array('per_page' => 5);
+    		$photos = $flickr->tagSearch($artist, $options);
+    		
+    		$this->view->photos = $photos;
+    	} 
+    	catch (Zend_Service_Exception $e) 
+    	{
+    		throw $e;
+    	}
+    }
+    /**
+     * Fetch videos for a specific artist
+     * 
+     */
+    public function videoListAction()
+    {
+    	$artist = $this->_request->getParam('artist');
+    	
+    	//Check if the artist name is present
+    	if(empty($artist))
+    	{
+    		throw new Exception('Whoops you need to name an artist');
+    	}
+    	
+    	try 
+    	{
+    		$YouTube = new Zend_Gdata_YouTube();
+
+    		//Create a new query
+    		$query = $YouTube->newVideoQuery();
+    		
+    		//Set the properies
+    		$query->videoQuery = $artist;
+    		$query->maxResults = 5;
+    		
+    		//Get a video from a category
+    		$videos = $YouTube->getVideoFeed($query);
+    		
+    		//Set the view variable
+    		$this->view->videos = $videos;
+    	} 
+    	catch (Zend_Service_Exception $e) 
+    	{
+    		throw $e;
+    	}
+    }
+    /**
      * Create Add Artist Form
      * 
      * @return Zend_From
