@@ -182,7 +182,7 @@ class ArtistController extends Zend_Controller_Action
     }
     
     /**
-     * List photos for a specifi artist
+     * List photos for a specific artist
      * 
      */
     public function listPhotosAction()
@@ -210,6 +210,7 @@ class ArtistController extends Zend_Controller_Action
     		throw $e;
     	}
     }
+
     /**
      * Fetch videos for a specific artist
      * 
@@ -246,6 +247,7 @@ class ArtistController extends Zend_Controller_Action
     		throw $e;
     	}
     }
+
     /**
      * Create Add Artist Form
      * 
