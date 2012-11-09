@@ -122,5 +122,27 @@ class TestController extends Zend_Controller_Action
     	}
     }
     
+    public function amazonTestAction()
+    {
+    	try 
+    	{
+    		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
+    							'q1gXCI5kk+nwqKuV4YErr55rl3MnQHNb7g0qOayv');
+    		$results = $amazon->itemSearch(array('SearchIndex' => 'Music',
+    							'Keywords' => 'Motley Crue'));
+    		foreach($results as $result)
+    		{
+    			echo $result->Title."<br>";
+    		}
+    	}
+    	catch(Zend_Exception $e)
+    	{
+    		throw $e;
+    	}
+    	
+    	//Supress the view
+    	$this->_helper->viewRenderer->setNoRender();
+    }
+    
 }
 
