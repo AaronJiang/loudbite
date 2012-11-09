@@ -140,7 +140,7 @@ class TestController extends Zend_Controller_Action
     		throw $e;
     	}
     	
-    	//Supress the view
+    	//Supress view
     	$this->_helper->viewRenderer->setNoRender();
     }
     
