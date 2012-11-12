@@ -129,7 +129,8 @@ class TestController extends Zend_Controller_Action
     		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
     							'q1gXCI5kk+nwqKuV4YErr55rl3MnQHNb7g0qOayv');
     		$results = $amazon->itemSearch(array('SearchIndex' => 'Music',
-    							'Keywords' => 'Motley Crue'));
+    							'Keywords' => 'Motley Crue',
+    							'AssociateTag' => 'actuatalk-20'));
     		foreach($results as $result)
     		{
     			echo $result->Title."<br>";
@@ -142,6 +143,48 @@ class TestController extends Zend_Controller_Action
     	
     	//Supress the view
     	$this->_helper->viewRenderer->setNoRender();
+    }
+    
+    public function rssTestAction()
+    {
+    	//Load the RSS document
+    	try 
+    	{
+			$rssFeedAsFile = 'rssexample.html';
+			$feed = Zend_Feed::importFile($rssFeedAsFile);
+
+			//Parse and store the RSS data
+			$this->view->title = $feed->title();
+			$this->view->link = $feed->link();
+			$this->view->description = $feed->description();
+			$this->view->ttl = $feed->ttl();
+			$this->view->copyright = $feed->copyright();
+			$this->view->language = $feed->language();
+			$this->view->category = $feed->category();
+			$this->view->pubDate = $feed->pubDate();
+			
+			//Get the articles
+			$articles = array();
+			foreach($feed as $article)
+			{
+				$articles[] = array(
+					"title" => $article->title(),
+					"description" => $article->description(),
+					"link" => $article->link(),
+					"author" => $article->author(),
+					"enclosure" =>
+					 array("url" => $article->enclosure['url'],
+					 	   "type" => $article->enclosure['type']	
+								)	
+							);
+			}	
+			
+			$this->view->articles = $articles;
+    	}
+    	catch(Zend_Feed_Exception $e)
+    	{
+    		throw $e;
+    	}
     }
     
 }
