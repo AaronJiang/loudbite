@@ -127,14 +127,15 @@ class TestController extends Zend_Controller_Action
     	try 
     	{
     		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
-    							'q1gXCI5kk+nwqKuV4YErr55rl3MnQHNb7g0qOayv');
+    							'fARC6sT+cgQHF+H84NNGH/tNLiXwtB0hU/t1zNoM');
     		$results = $amazon->itemSearch(array('SearchIndex' => 'Music',
-    							'Keywords' => 'Motley Crue',
+    							'Keywords' => 'Maroon5',
     							'AssociateTag' => 'actuatalk-20'));
     		foreach($results as $result)
     		{
     			echo $result->Title."<br>";
     		}
+
     	}
     	catch(Zend_Exception $e)
     	{
