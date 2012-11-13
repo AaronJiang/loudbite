@@ -128,8 +128,11 @@ class TestController extends Zend_Controller_Action
     	{
     		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
     							'fARC6sT+cgQHF+H84NNGH/tNLiXwtB0hU/t1zNoM');
-    		$results = $amazon->itemSearch(array('SearchIndex' => 'Music',
-    							'Keywords' => 'Maroon5',
+    		$results = $amazon->itemSearch(array('SearchIndex' => 'Books',
+    							'Keywords' => 'linux',
+                                'Condition' => 'Used',
+                                'MaximumPrice' => '2000',
+                                'MinimumPrice' => '1000',
     							'AssociateTag' => 'actuatalk-20'));
     		foreach($results as $result)
     		{
