@@ -129,14 +129,48 @@ class TestController extends Zend_Controller_Action
     		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
     							'fARC6sT+cgQHF+H84NNGH/tNLiXwtB0hU/t1zNoM');
     		$results = $amazon->itemSearch(array('SearchIndex' => 'Books',
-    							'Keywords' => 'linux',
+    							'Keywords' => 'PHP',
                                 'Condition' => 'Used',
-                                'MaximumPrice' => '2000',
-                                'MinimumPrice' => '1000',
+    							'Publisher' => 'Apress',
+    							'Sort' => 'titlerank',
+    							'ItemPage' => '3',
+    							'ResponseGroup' => 
+    								'Small,Similarities,
+    								Reviews, EditorialReview',
     							'AssociateTag' => 'actuatalk-20'));
     		foreach($results as $result)
     		{
-    			echo $result->Title."<br>";
+    			echo "<b>".$result->Title."</b><br>";
+    			
+    			//Fetch the customer reviews and display the content
+    			$customerReviews = $result->CustomerReviews;
+    			
+    			if(empty($customerReviews))
+    			{
+    				echo "No customer reviews.<br>";
+    			}
+    			else
+    			{
+    				foreach($customerReviews as $customerReview)
+    				{
+    					echo "Review Summary:".$customerReview->Summary."...<br>";
+    				}	
+    			}
+
+    			$similarProduct = $result->SimilarProducts;
+    			
+    			if(empty($similarProduct))
+    			{
+    				echo "No recommendations.";
+    			}	
+    			else
+    			{
+    				foreach($similarProduct as $similar)
+    				{
+    					echo "Recommended Books: ".$similar->Title."<br>";
+    				}	
+    			}	
+    			echo "<br><br>";
     		}
 
     	}
@@ -145,7 +179,12 @@ class TestController extends Zend_Controller_Action
     		throw $e;
     	}
     	
-    	//Supress the view
+    	echo "<br>";
+		echo "Total Books: ".$results->totalResults();
+		echo "<br>";
+		echo "Total Pages: ".$results->totalPages();
+		$this->_helper->viewRenderer->setNoRender();
+    	
     	$this->_helper->viewRenderer->setNoRender();
     }
     
