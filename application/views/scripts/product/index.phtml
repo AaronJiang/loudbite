@@ -1,4 +1,61 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Product</b> and script/action name <b>index</b></p>
-</div>
+<?php echo $this->doctype('XHTML1_STRICT'); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <?php echo $this->headTitle('Loudbite.com - Artist Products'); ?>
+</head>
+<body>
+<?php echo $this->render("includes/header.phtml")?>
+
+<?php if($this->products->totalResults()) {?>
+<table border="1" width="300">
+
+	<tr><td colspan="2">You might be interested in these apparel</td></tr>
+
+	<?php foreach($this->products as $product) {?>
+		<tr><td><img src="<?php echo $product->SmallImage->Url ?>" width="50"
+       height="50"></td>
+		<td>
+	     <a href="<?php echo $product->DetailPageURL ?>"><?php echo $product->Title ?>
+   		 </a>
+  		</td></tr>
+	<?php } ?>
+		
+</table>
+<?php } ?>
+
+<?php if($this->cds->totalResults()) {?>
+<table border="1" width="300">
+
+	<tr><td colspan="2">You might be interested in these CDs</td></tr>
+
+	<?php foreach($this->cds as $cd) {?>
+		<tr><td><img src="<?php echo $cd->SmallImage->Url ?>" width="50"
+       height="50"></td>
+		<td>
+	     <a href="<?php echo $cd->DetailPageURL ?>"><?php echo $cd->Title ?>
+   		 </a>
+  		</td></tr>
+	<?php } ?>
+		
+</table>
+<?php } ?>
+
+<?php if($this->posters->totalResults()) {?>
+<table border="1" width="300">
+
+	<tr><td colspan="2">You might be interested in these posters</td></tr>
+
+	<?php foreach($this->posters as $poster) {?>
+		<tr><td><img src="<?php echo $poster->SmallImage->Url ?>" width="50"
+       height="50"></td>
+		<td>
+	     <a href="<?php echo $poster->DetailPageURL ?>"><?php echo $poster->Title ?>
+   		 </a>
+  		</td></tr>
+	<?php } ?>
+		
+</table>
+<?php } ?>
+</body>
+</html>
+		

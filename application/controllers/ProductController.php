@@ -52,6 +52,38 @@ class ProductController extends Zend_Controller_Action
     		throw $e;
     	}
     }
+    
+    public function quickProductDisplayAction()
+    {
+    	//Get the artist name from the request
+    	$artistName = $this->_request->getParam("artistName");
+    	
+    	if(empty($artistName))
+    	{
+    		throw new Exception("Oh man i think you broke something.
+    			No not really, you just got here by mistake.");
+    	}
+    	
+    	try
+    	{
+    		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
+    				'fARC6sT+cgQHF+H84NNGH/tNLiXwtB0hU/t1zNoM');
+    		
+    		//Get the music tracks
+    		$cds = $amazon->itemSearch(array('SearchIndex' => 'Music',
+    				'Artist' => $artistName,
+    				'ResponseGroup' => 'Small, Images',
+    				'AssociateTag' => 'actuatalk-20'));
+    		
+    		//Set the views
+    		$this->view->products = $cds;
+    	}
+    	catch(Zend_Exception $e)
+    	{
+    		throw $e;
+    	}	
+    	
+    }
 
 
 }
