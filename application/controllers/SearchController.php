@@ -183,5 +183,86 @@ class SearchController extends Zend_Controller_Action
     	$this->_helper->viewRenderer->setNoRender();
     }
 
+    public function parseHtmlAction()
+    {
+    	try 
+    	{
+    		//Open the index for updating
+    		$Index = Zend_Search_Lucene::open('../application/searchindex');
+
+    		//Set path to the html parse
+    		$htmlDocPath = 'terms.html';
+    		
+    		//Check if the file is present
+    		if(!file_exists($htmlDocPath))
+    		{
+    			throw new Exception("Could not find file $htmlDocPath.");
+    		}	
+    		
+    		//Parse the html file
+    		$htmlDoc = Zend_Search_Lucene_Document_Html::loadHTMLFile($htmlDocPath);
+    		
+    		//Example of getters and property calls
+    		$links = $htmlDoc->getLinks();
+    		$headerLinks = $htmlDoc->getHeaderLinks();
+    		$title = $htmlDoc->title;
+    		$body = $htmlDoc->body;
+    		
+    		//Add the content to the index
+    		$Index->addDocument($htmlDoc);
+    		
+    		echo 'Successfully parsed HTML file.<br/>';
+			echo 'Total Documents:'. $Index->numDocs().'<br/><br/>';
+			//Validate parsed links within document
+			echo "Links Parsed<br/>";
+			foreach($links as $link){
+				echo "$link <br/>";
+			}
+    	}
+    	catch(Zend_Search_Exception $e)
+    	{
+    		echo $e->getMessage();
+    	}
+    	
+    	//Suppress the view
+    	$this->_helper->viewRenderer->setNoRender();
+    }
+    
+    /**
+     * Result, fetch the result and display to the user
+     * 
+     */
+    public function resultAction()
+    {
+    	//Open the index to search in
+    	$Index = Zend_Search_Lucene::open('../application/searchindex');
+    	
+    	//Set the properties for the index
+    	$Index->setDefaultSearchField('artist_name');
+    	$Index->setResultSetLimit(10);
+    	
+    	//Construct query
+    	$query = 'genre:electronic';
+		$query = Zend_Search_Lucene_Search_QueryParser::parse($query);
+    	
+		//Search
+		$hits = $Index->find($query,'artist_name', SORT_STRING, SORT_ASC);
+
+		$text = "";
+		foreach($hits as $hit)
+		{
+			$text .= "<tr><td>
+			<a href='artist/'>$hit->artist_name</a>
+			$hit->genre
+			</td></tr>";
+			$text .= "<tr><td>$hit->description<br/><br/></td></tr>";
+		}
+		
+		//Highlight the words.
+		$text = $query->htmlFragmentHighlightMatches($text);
+		
+		//Set the view variables
+		$this->view->text = $text;
+    }
 }
 
