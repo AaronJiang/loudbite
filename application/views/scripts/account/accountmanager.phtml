@@ -1,9 +1,3 @@
-<?php echo $this->doctype('XHTML1_STRICT'); ?>
-<html>
-<head>
-<?php echo $this->headTitle('LoudBite.com – Account Manager'); ?>
-</head>
-<body>
 <?php echo $this->render("includes/header.phtml"); ?>
 <h2>LoudBite My Page - <?php echo $this->escape($this->username); ?></h2>
 
@@ -40,6 +34,5 @@ urlencode($artist['artist_name'])?>'>
 </tr>
 
 </table>
-</body>
-</html>
+<?php echo $this->render("includes/footer.phtml"); ?>
 

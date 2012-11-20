@@ -389,7 +389,7 @@ class AccountController extends Zend_Controller_Action
         $form->addElement($captchaElement);
         $form->addElement('submit','submit');
         $submitButton = $form->getElement('submit');
-        $submitButton->setLabel('Create My Account!');
+        $submitButton->setLabel('Submit');
 
         return $form;
     }

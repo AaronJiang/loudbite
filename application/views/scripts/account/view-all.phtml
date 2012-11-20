@@ -1,10 +1,3 @@
-<?php echo $this->doctype('XHTML1_STRICT'); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <?php echo $this->headTitle('LoudBite.com – View All Accounts'); ?>
-</head>
-<body>
-
 <?php echo $this->render('includes/header.phtml'); ?>
 <h2>Active User List</h2>
 
@@ -37,5 +30,4 @@ Total active members: <?php echo $this->totalMembers; ?>
 ?>
        
 </table>
-</body>
-</html>
+<?php echo $this->render("includes/footer.phtml"); ?>

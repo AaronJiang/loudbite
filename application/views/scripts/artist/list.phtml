@@ -1,8 +1,4 @@
-<?php echo $this->doctype('XHTML1_STRICT'); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<?php echo $this->render('includes/header.phtml')?>
-</head>
+<?php echo $this->render('includes/header.phtml')?>
 
 <table border='0' width='600'>
 
@@ -31,5 +27,4 @@ if($this->paginator){
 ?>	
 
 </table>
-</body>
-</html>
+<?php echo $this->render("includes/footer.phtml"); ?>

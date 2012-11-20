@@ -1,9 +1,3 @@
-<?php echo $this->doctype('XHTML1_STRICT'); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <?php echo $this->headTitle('Loudbite.com - Artist Products'); ?>
-</head>
-<body>
 <?php echo $this->render("includes/header.phtml")?>
 
 <?php if($this->products->totalResults()) {?>
@@ -56,6 +50,5 @@
 		
 </table>
 <?php } ?>
-</body>
-</html>
+<?php echo $this->render('includes/footer.phtml') ?>
 		

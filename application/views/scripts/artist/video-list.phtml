@@ -1,9 +1,3 @@
-<?php echo $this->doctype('XHTML1_STRICT'); ?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <?php echo $this->headTitle('Loudbite.com – Artists Videos'); ?>
-</head>
-<body>
 <?php echo $this->render("includes/header.phtml")?>
 <?php 
 foreach($this->videos as $video)
@@ -28,4 +22,4 @@ foreach($this->videos as $video)
 <?php
 }
 ?>
-</html>
+<?php echo $this->render('includes/footer.phtml') ?>
