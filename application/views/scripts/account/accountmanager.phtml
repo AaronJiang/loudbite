@@ -1,18 +1,19 @@
 <?php echo $this->render("includes/header.phtml"); ?>
-<h2>LoudBite My Page - <?php echo $this->escape($this->username); ?></h2>
 
+<div id="content" class="w">
+<h2>LoudBite My Page - <?php echo $this->escape($this->username); ?></h2>
 <!--- MAIN CONTAINER -->
-<table>
+<table class="table">
 <tr><td valign="top">
 <!--PROFILE DATA-->
-<table width="300" border="1">
+<table class="table ">
 <tr><td>Username: <?php echo $this->escape($this->username); ?></td></tr>
 <tr><td>Date Joined: <?php echo $this->dateJoined?></td></tr>
 </table>
 </td>
 <td valign="top">
 <!--FAVORITE BAND LIST-->
-<table width="300" border="1">
+<table class="table table-hover">
 <?php if($this->artists){?>
 <tr align="center">
 <td><b>Artist Name</b></td>
@@ -20,7 +21,7 @@
 </tr>
 <?php foreach($this->artists as $artist){?>
 <tr>
-<td><a href='artist/<?php echo
+<td><a href='/artist/video-list?artist=<?php echo
 urlencode($artist['artist_name'])?>'>
 <?php echo $this->escape($artist['artist_name']); ?></a></td>
 <td><?php echo $this->escape($artist['date_became_fan']); ?></td></tr>
@@ -34,5 +35,6 @@ urlencode($artist['artist_name'])?>'>
 </tr>
 
 </table>
+</div>
 <?php echo $this->render("includes/footer.phtml"); ?>
 

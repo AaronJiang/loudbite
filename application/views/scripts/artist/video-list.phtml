@@ -1,4 +1,5 @@
 <?php echo $this->render("includes/header.phtml")?>
+<div id="content" class="w">
 <?php 
 foreach($this->videos as $video)
 {
@@ -10,9 +11,9 @@ foreach($this->videos as $video)
 	$thumbnail = $thumbnails[1]['url'];
 	$ratingInfo = $video->getRating();
 ?>
-<table>
-<tr><td><img src='<?php echo $thumbnail ?>' height=50 width=50></td>
-   <td valign="top"><a href='<?php echo $uri ?>'><?php echo $title ?></a><br>
+<table class="table table-hover">
+<tr><td><img src='<?php echo $thumbnail ?>' height=50 width=50 class="img-rounded"></td>
+   <td valign="top"><a href='<?php echo $uri ?>' target='_blank'><?php echo $title ?></a><br>
    Duration <?php echo $duration ?> sec<br>
 	Avg Rating: <?php echo $ratingInfo->average ?><br>
 	Total Rated: <?php echo $ratingInfo->numRaters ?></td>
@@ -22,4 +23,5 @@ foreach($this->videos as $video)
 <?php
 }
 ?>
+</div>
 <?php echo $this->render('includes/footer.phtml') ?>

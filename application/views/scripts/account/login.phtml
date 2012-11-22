@@ -2,10 +2,28 @@
 	echo $this->render("includes/header.phtml");
 ?>
 
+<div class='main-content'>
 <?php 
-	echo $this->message;
-	echo $this->form;
+	if(!empty($this->message))
+	{
 ?>
+	<div class="alert alert-block">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <h4>Warning!</h4>
+    <?php echo $this->message?>
+    </div>
+<?		
+	}	
+	echo $this->form;
+
+?>
+	<div >
+	<p>Haven't got an account? Want one?</p>
+	<p>
+	<a href="/account/new">Register</a>
+	
+	</div>
+</div>
 <?php 
 	echo $this->render("includes/footer.phtml");
 ?>

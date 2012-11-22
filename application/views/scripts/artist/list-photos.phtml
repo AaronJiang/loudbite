@@ -1,5 +1,5 @@
 <?php echo $this->render("includes/header.phtml")?>
-
+<div id="content" class="w">
 <?php
 if($this->photos->totalResults() > 0){
   foreach($this->photos as $photo){
@@ -10,7 +10,7 @@ if($this->photos->totalResults() > 0){
     if(!empty($original)){?>
     <a href='<?php echo $original ?>'>
     <?php }?>
-    <img src='<?php echo $thumbnail ?>'>
+    <img src='<?php echo $thumbnail ?>' class="img-rounded">
     <?php {?>
     </a>
     <?php }?>
@@ -20,4 +20,4 @@ if($this->photos->totalResults() > 0){
 We're sorry there were no photos available.
 <?php } ?>
 <?php echo $this->render("includes/footer.phtml"); ?>
-    
+</div>    

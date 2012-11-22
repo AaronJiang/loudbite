@@ -30,8 +30,9 @@ a:hover.btnDown,a:active.btnDown {background-position:0 -55px;}
 #container{}
 #header{ background:#0e0e0e url(../img/header.gif) left bottom repeat-x;height:75px;}
 #content{
+  padding: 20px;
 	border-top:1px solid #ebebeb;
-	background:#f4f4f4;
+	background: #F8F8F8; 
 	margin-top: 0px;
 	-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;
 }
@@ -250,7 +251,7 @@ font-family: verdana,arial,helvetica,sans-serif;color: #900;
 }
 
 input#submit, a#submit {
-    background: url("img/blue.png") no-repeat scroll 0 0 transparent;
+    background: url("/img/blue.png") no-repeat scroll 0 0 transparent;
     border: 0 none;
     color: white;
     display: block;
@@ -263,6 +264,19 @@ input#submit, a#submit {
 }
 
 input#submit:hover, a#submit:hover {
-    background: url("img/bluehigh.png") no-repeat scroll 0 0 transparent;
+    background: url("/img/bluehigh.png") no-repeat scroll 0 0 transparent;
     color: white;
+}
+
+.main-content{
+  width: 550px;
+  margin: auto;
+  margin-top: 40px;
+  -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
+  border: 2.5px #eee solid;
+  padding: 15px;
+  background-color:   #F8F8F8 ;
+  margin-bottom: 30px;
 }

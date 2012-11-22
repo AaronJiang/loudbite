@@ -401,7 +401,7 @@ class AccountController extends Zend_Controller_Action
     {
         //Create the form
         $form = new Zend_Form();
-        $form->setAction("authenticate");
+        $form->setAction("/account/authenticate");
         $form->setMethod("post");
         $form->setName("loginform");
 
