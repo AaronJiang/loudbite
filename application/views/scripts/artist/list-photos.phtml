@@ -38,19 +38,12 @@ if($this->photos->totalResults() > 0){
 <?php 
   foreach($this->photos as $photo){
     $thumbnail = $photo->Small->uri;
-    $original = $photo->Original->uri;
-    var_dump($photo->Small);
-    //break;
+    //$original = $photo->Original->uri;
 ?>
 <li class="span3">
-    <?php
-    if(!empty($original)){?>
-    <a href='<?php echo $original ?>'>
-    <?php }?>
+    <a href='<?php echo $thumbnail ?>' target='_blank'>
     <img src='<?php echo $thumbnail ?>' class="img-rounded">
-    <?php {?>
     </a>
-    <?php }?>
 </li>    
 <?php
   }

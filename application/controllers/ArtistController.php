@@ -243,7 +243,7 @@ class ArtistController extends Zend_Controller_Action
     		
     		//Set the properies
     		$query->videoQuery = $artist;
-    		$query->maxResults = 5;
+    		$query->maxResults = 8;
     		
     		//Get a video from a category
     		$videos = $YouTube->getVideoFeed($query);
