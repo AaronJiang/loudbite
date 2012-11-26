@@ -35,6 +35,15 @@ class AccountController extends Zend_Controller_Action
     }
     
     /**
+     * Log out account
+     */
+    public function logoutAction()
+    {
+    	session_unset();
+    	$this->_forward('login','account');
+    }
+    
+    /**
      * Authenticate login information
      */
     public function authenticateAction()
@@ -100,38 +109,40 @@ class AccountController extends Zend_Controller_Action
         //Check if the user is logged in
         if(!isset($_SESSION['id']))
         {
-            $this->_forward("login");
+            $this->_forward("login","account");
         }
-
-        try
-        {
-            //Create a db object
-            require_once "../application/models/Db/Db_Db.php";
-            $db = Db_Db::conn();
-            //Initialize data.
-            $userId = $_SESSION['id'];
-            $userName = $_SESSION['username'];
-            $dateJoined = $_SESSION['dateJoined'];
-
-            //Fetch all the users favorite artists.
-            $statement = "SELECT b.artist_name, b.id,
+		else
+		{
+			try
+			{
+				//Create a db object
+				require_once "../application/models/Db/Db_Db.php";
+				$db = Db_Db::conn();
+				//Initialize data.
+				$userId = $_SESSION['id'];
+				$userName = $_SESSION['username'];
+				$dateJoined = $_SESSION['dateJoined'];
+			
+				//Fetch all the users favorite artists.
+				$statement = "SELECT b.artist_name, b.id,
                     aa.created_date as date_became_fan
                     FROM artists AS b
                     INNER JOIN accounts_artists aa ON aa.artist_id = b.id
                     WHERE aa.account_id = ?
                     AND aa.is_fav = 1";
-
-            $favArtists = $db->fetchAll($statement, $userId);
-
-            //Set the view variables
-            $this->view->artists = $favArtists;
-            $this->view->username = $userName;
-            $this->view->dateJoined = $dateJoined;
-        }
-        catch(Zend_Db_Exception $e)
-        {
-            echo $e->getMessage();
-        }
+			
+				$favArtists = $db->fetchAll($statement, $userId);
+			
+				//Set the view variables
+				$this->view->artists = $favArtists;
+				$this->view->username = $userName;
+				$this->view->dateJoined = $dateJoined;
+			}
+			catch(Zend_Db_Exception $e)
+			{
+				echo $e->getMessage();
+			}
+		}	
 
     }
     /**

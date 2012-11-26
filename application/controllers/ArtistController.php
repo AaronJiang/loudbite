@@ -27,7 +27,15 @@ class ArtistController extends Zend_Controller_Action
     {
         //Check if the user is logged in
         //Set the view varibales
-        $this->view->form = $this->getAddArtistForm();
+        if(isset($_SESSION['id']))
+        {
+        	$this->view->form = $this->getAddArtistForm();
+        }	
+        else 
+        {
+        	$this->_forward('login','account');
+        }
+        
     }
     
     /**
@@ -173,8 +181,8 @@ class ArtistController extends Zend_Controller_Action
      	$paginator = Zend_Paginator::factory($statement);
     	
      	//Set the properties for the pagination
-     	$paginator->setItemCountPerPage(4);
-     	$paginator->setPageRange(3);
+     	$paginator->setItemCountPerPage(10);
+     	$paginator->setPageRange(10);
      	$paginator->setCurrentPageNumber($currentPage);
     	
      	$this->view->paginator = $paginator;
@@ -200,10 +208,11 @@ class ArtistController extends Zend_Controller_Action
     		$flickr = new Zend_Service_Flickr('01a20f07abe1967002c3ec4967c46034');
 
     		//get the photos
-    		$options = array('per_page' => 5);
+    		$options = array('per_page' => 20);
     		$photos = $flickr->tagSearch($artist, $options);
     		
     		$this->view->photos = $photos;
+    		$this->view->artist = $artist;
     	} 
     	catch (Zend_Service_Exception $e) 
     	{
@@ -241,13 +250,51 @@ class ArtistController extends Zend_Controller_Action
     		
     		//Set the view variable
     		$this->view->videos = $videos;
+    		$this->view->artist = $artist;
     	} 
     	catch (Zend_Service_Exception $e) 
     	{
     		throw $e;
     	}
     }
-
+	
+    /**
+     * CD lists from amazons
+     * 
+     */
+    public function listCdsAction()
+    {
+    	//Get the artist name from the request
+    	$artistName = $this->_request->getParam("artist");
+    	 
+    	if(empty($artistName))
+    	{
+    		throw new Exception("Oh man i think you broke something.
+    			No not really, you just got here by mistake.");
+    	}
+    	 
+    	try
+    	{
+    		$amazon = new Zend_Service_Amazon('AKIAJI6PH75BYC7SO7JA','US',
+    				'fARC6sT+cgQHF+H84NNGH/tNLiXwtB0hU/t1zNoM');
+    
+    		//Get the music tracks
+    		$cds = $amazon->itemSearch(array('SearchIndex' => 'Music',
+    				'Artist' => $artistName,
+    				'ResponseGroup' => 'Small, Images',
+    				'AssociateTag' => 'actuatalk-20'));
+    
+    		//Set the views
+    		$this->view->products = $cds;
+    		$this->view->artist = $artistName;
+    	}
+    	catch(Zend_Exception $e)
+    	{
+    		throw $e;
+    	}
+    	 
+    }
+    
     /**
      * Create Add Artist Form
      * 

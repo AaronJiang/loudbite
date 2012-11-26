@@ -16,44 +16,35 @@
 </div>
 <div id="content" class="w">
 <ul class="nav nav-pills">
-    <li class="active">
-    <a href="#">Videos</a>
+ 	<li>
+    	<a href="/artist/video-list?artist=<?php echo $this->artist?>">
+    	Videos</a>
     </li>
     <li>
     	<a href="/artist/list-photos?artist=<?php echo $this->artist?>">
     	Photos</a>
     </li>
-    <li>
-    	<a href="/artist/list-cds?artist=<?php echo $this->artist?>">CDs</a>
+    <li class="active">
+    	<a href="#">CDs</a>
     </li>
-</ul>
-<?php 
-foreach($this->videos as $video)
-{
-	$title = $video->getVideoTitle();
-	$uri = $video->getVideoWatchPageUrl();
-	$description = $video->getVideoDescription();
-	$thumbnails = $video->getVideoThumbnails();
-	$duration = $video->getVideoDuration();
-	$thumbnail = $thumbnails[1]['url'];
-	$ratingInfo = $video->getRating();
-?>
-<table class="table table-hover">
-<tr>
-	<td width="150px">
-		<a href='<?php echo $uri ?>' target='_blank'>
-		<img src='<?php echo $thumbnail ?>' width=120 heigt=70 class="img-rounded">
-		</a>
-	</td>
-   <td valign="top"><a href='<?php echo $uri ?>' target='_blank'><?php echo $title ?></a><br>
-   Duration <?php echo $duration ?> sec<br>
-	Avg Rating: <?php echo $ratingInfo->average ?><br>
-	Total Rated: <?php echo $ratingInfo->numRaters ?></td>
-</tr>
-</table>
+</ul>	    
+<?php if($this->products->totalResults()) {?>
+<table class="table table-hover" width="300">
 
-<?php
-}
-?>
+	<tr><td colspan="2">You might be interested in these items</td></tr>
+
+	<?php foreach($this->products as $product) {?>
+		<tr><td><img src="<?php echo $product->SmallImage->Url ?>" width="50"
+       height="50"></td>
+		<td>
+	     <a href="<?php echo $product->DetailPageURL ?>"><?php echo $product->Title ?>
+   		 </a>
+  		</td></tr>
+	<?php } ?>
+		
+</table>
+<?php } ?>
 </div>
+
 <?php echo $this->render('includes/footer.phtml') ?>
+		

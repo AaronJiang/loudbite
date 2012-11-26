@@ -1,8 +1,24 @@
 <?php 
 	echo $this->render("includes/header.phtml");
 ?>
+<div id="header">
+	<div class="w">
+		<div id="logo"><a href="/">LoudBite.com</a></div>
+		<div id="mainmenu">
+			<ul>
+				<li class="selected"><a href="/account/accountmanager"><span>My Account</span></a></li>
+				<li onMouseMove="$('.submenu',this).show();$(this).addClass('hover');"  onMouseOut="$('.submenu',this).hide();$(this).removeClass('hover');"><a href="/artist/list"><span>View All Artists</span></a></li>
+				<li onMouseMove="$('.submenu',this).show();$(this).addClass('hover');"  onMouseOut="$('.submenu',this).hide();$(this).removeClass('hover');"><a href="/artist/new"><span>Add Artists</span></a></li>
+				<li onMouseMove="$('.submenu',this).show();$(this).addClass('hover');"  onMouseOut="$('.submenu',this).hide();$(this).removeClass('hover');">
+					<a href="/account/logout"><span>Log Out</span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 
 <div class='main-content'>
+<h3>Sign into your account</h3>
 <?php 
 	if(!empty($this->message))
 	{

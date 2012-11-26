@@ -1,11 +1,48 @@
 <?php echo $this->render("includes/header.phtml")?>
+<div id="header">
+	<div class="w">
+		<div id="logo"><a href="/">LoudBite.com</a></div>
+		<div id="mainmenu">
+			<ul>
+				<li onMouseMove="$('.submenu',this).show();$(this).addClass('hover');"  onMouseOut="$('.submenu',this).hide();$(this).removeClass('hover');"><a href="/account/accountmanager"><span>My Account</span></a></li>
+				<li class="selected"><a href="/artist/list"><span>View All Artists</span></a></li>
+				<li onMouseMove="$('.submenu',this).show();$(this).addClass('hover');"  onMouseOut="$('.submenu',this).hide();$(this).removeClass('hover');"><a href="/artist/new"><span>Add Artists</span></a></li>
+				<li onMouseMove="$('.submenu',this).show();$(this).addClass('hover');"  onMouseOut="$('.submenu',this).hide();$(this).removeClass('hover');">
+					<a href="/account/logout"><span>Log Out</span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
 <div id="content" class="w">
+<ul class="nav nav-pills">
+    <li>
+    	<a href="/artist/video-list?artist=<?php echo $this->artist?>">
+    	Videos</a>
+    </li>
+    <li class="active">
+    	<a href="#">
+    	Photos</a>
+    </li>
+    <li>
+    	<a href="/artist/list-Cds?artist=<?php echo $this->artist?>">CDs</a>
+    </li>
+</ul>
+
+
+
 <?php
 if($this->photos->totalResults() > 0){
-  foreach($this->photos as $photo){
-    $thumbnail = $photo->Thumbnail->uri;
-    $original = $photo->Original->uri;
 ?>
+<ul class="thumbnails">
+<?php 
+  foreach($this->photos as $photo){
+    $thumbnail = $photo->Small->uri;
+    $original = $photo->Original->uri;
+    var_dump($photo->Small);
+    //break;
+?>
+<li class="span3">
     <?php
     if(!empty($original)){?>
     <a href='<?php echo $original ?>'>
@@ -14,8 +51,12 @@ if($this->photos->totalResults() > 0){
     <?php {?>
     </a>
     <?php }?>
+</li>    
 <?php
   }
+?> 
+</ul>
+<?php 
 }else{ ?>
 We're sorry there were no photos available.
 <?php } ?>
