@@ -2,5 +2,7 @@ This project aimed to build an Artist share websites. Codes mainly comes from th
 DON'T forget to import loudbite.sql into your database. 
 
 Demo: http://voice.jianglong.org
+Account: aaron@loudbite.com
+Password: 123
 
 For more information, please contact jianglong14@gmail.com
